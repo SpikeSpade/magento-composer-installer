@@ -71,6 +71,13 @@ class Copy extends DeploystrategyAbstract
 
         // From now on $destPath can't be a directory, that case is already handled
 
+        // Check if the $desthPath is a symbolic link
+        if(is_link($destPath)){
+            echo "Target $dest already exists as sym link and will therefor not be updated\n";
+
+            return true;
+        }
+        
         // If file exists and force is not specified, throw exception unless FORCE is set
         if (file_exists($destPath)) {
             if ($this->isForced()) {
